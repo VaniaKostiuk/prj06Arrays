@@ -61,12 +61,15 @@ class CompareByYear implements Comparator<Car>{
 	public int compare(Car c1, Car c2) {
 		return c1.getYear()-c2.getYear();
 	}
+}
+
 class CompareByName implements Comparator<Car>{
 
 		@Override
 		public int compare(Car c1, Car c2) {
 			return c1.getName().compareTo(c2.getName());
 		}
+}
 	
 public class PogramCompareTo {
 
@@ -115,6 +118,15 @@ public class PogramCompareTo {
 		carMas[2] = new Car(11, "ford2");
 		Arrays.sort(carMas,(c1, c2)-> c1.getYear()-c2.getYear()); //короткая форма записи компаратора для дравы  8 и выше
 		
+		System.out.println(Arrays.toString(carMas));
+		Arrays.sort(carMas, 
+				new Comparator<Car>() {
+					@Override
+					public int compare(Car c1, Car c2) {							
+						return c1.getName().compareTo(c2.getName());
+					}
+			    }
+		);
 		System.out.println(Arrays.toString(carMas));
 	}
 
