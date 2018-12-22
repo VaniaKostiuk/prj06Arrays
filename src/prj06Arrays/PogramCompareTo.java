@@ -3,11 +3,21 @@ package prj06Arrays;
 import java.util.Arrays;
 import java.util.Comparator;
 
-interface MoveAble {
-	int move();
+interface FlyAble {
+	int fly();
+	default void foo1(int i) {
+	System.out.println("foo1");
+	}
 }
 
-class Car implements MoveAble , Comparable<Car>{
+interface MoveAble {
+	int move();
+	default void foo2(int i) {
+		System.out.println("foo2");
+		}
+}
+
+class Car implements MoveAble , Comparable<Car>, Cloneable, FlyAble{
 	private int year ; 
 	private String name ;
 	private int speed ;
@@ -37,6 +47,12 @@ class Car implements MoveAble , Comparable<Car>{
 		this.year = year;
 		this.name = name;
 	}
+	public Car cloneCar() {
+		return new Car (year, name);
+	}
+	public Car clone() throws CloneNotSupportedException {
+		return (Car) super.clone();
+	}
 	@Override
 	public int move() {
 		return speed ;
@@ -51,6 +67,11 @@ class Car implements MoveAble , Comparable<Car>{
 	@Override
 	public String toString() {
 		return "Car [year=" + year + ", name=" + name + ", speed=" + speed + "]";
+	}
+	@Override
+	public int fly() {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 	
 	
@@ -73,7 +94,7 @@ class CompareByName implements Comparator<Car>{
 	
 public class PogramCompareTo {
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws CloneNotSupportedException {
 		/*int [] mas = {1,2,5,3,-5,-8,0};
 		Arrays.sort(mas);
 		System.out.println(Arrays.toString(mas));
@@ -118,7 +139,7 @@ public class PogramCompareTo {
 		carMas[2] = new Car(11, "ford2");
 		Arrays.sort(carMas,(c1, c2)-> c1.getYear()-c2.getYear()); //короткая форма записи компаратора для дравы  8 и выше
 		
-		System.out.println(Arrays.toString(carMas));
+		//System.out.println(Arrays.toString(carMas));
 		Arrays.sort(carMas, 
 				new Comparator<Car>() {
 					@Override
@@ -127,7 +148,18 @@ public class PogramCompareTo {
 					}
 			    }
 		);
-		System.out.println(Arrays.toString(carMas));
+		//System.out.println(Arrays.toString(carMas));
+		Car c = new Car (1 , "bmw") ;
+		Car c2 = c.clone();
+		System.out.println(c.hashCode());
+		System.out.println(c);
+		System.out.println(c2.hashCode());
+		System.out.println(c2);
+		c2.setName("opel");
+		System.out.println(c);
+		System.out.println(c2);
+		//c.foo1(1);
+		
 	}
 
 }
